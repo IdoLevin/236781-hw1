@@ -20,7 +20,8 @@ def random_labelled_image(
     # TODO:
     #  Implement according to the docstring description.
     # ====== YOUR CODE: ======
-    raise NotImplementedError()
+    image = torch.randint(size = shape, low = low, high = high)
+    label = torch.randint(size =(0,) , low = low, high = num_classes-1).shape[0]
     # ========================
     return image, label
 
