@@ -21,7 +21,7 @@ def random_labelled_image(
     #  Implement according to the docstring description.
     # ====== YOUR CODE: ======
     image = torch.randint(size = shape, low = low, high = high)
-    label = torch.randint(size =(0,) , low = low, high = num_classes-1).shape[0]
+    label = torch.randint(size = (0,) , low = low, high = num_classes-1).shape[0]
     # ========================
     return image, label
 
@@ -37,16 +37,16 @@ def torch_temporary_seed(seed: int):
     #  Implement this context manager as described.
     #  See torch.random.get/set_rng_state(), torch.random.manual_seed().
     # ====== YOUR CODE: ======
-    raise NotImplementedError()
+    curr_seed = torch.random.get_rng_state()
     # ========================
     try:
         # ====== YOUR CODE: ======
-        raise NotImplementedError()
+        torch.set_rng_state(torch.random.manual_seed(seed).get_state())
         # ========================
         yield
     finally:
         # ====== YOUR CODE: ======
-        raise NotImplementedError()
+        torch.set_rng_state(curr_seed)
         # ========================
 
 
