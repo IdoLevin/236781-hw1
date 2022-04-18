@@ -80,7 +80,7 @@ def create_train_validation_loaders(
     validation_size = int(validation_ratio * total_size)
 
     # get indices
-    indices = list(range(total_size))
+    indices = torch.randperm(total_size)
     validation_indices = indices[:validation_size]
     train_indices = indices[validation_size:]
 
