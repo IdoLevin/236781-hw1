@@ -9,29 +9,47 @@ math (delimited with $$).
 # Part 1 answers
 
 part1_q1 = r"""
-**Your answer:**
+1. False.
+ 
+The test set is used to estimate the out-sample error, 
+not the in-sample error which is determined by the training set. 
 
+2. False. 
 
-Write your answer using **markdown** and $\LaTeX$:
-```python
-# A code block
-a = 2
-```
-An equation: $e^{i\pi} -1 = 0$
+The split should be random, for the 2 sets to be iid. 
+If the split is deterministic, e.g. always taking the first samples as the training set and the last samples as 
+the test set, then the distributions of the 2 sets might be different or dependent in each other, 
+because of patterns in the dataset order.
 
+Also, the train set should be large, because it is more important to train well than to test well. 
+E.g. if the training set would be 10% of the dataset, then the test would be very good but 
+the resulting model would not be as good as it could be. 
+
+3. True. 
+
+Cross-validation is using the training set for validation. 
+Using the test set would make the out-sample error estimation invalid. 
+
+4. False. 
+
+During cross-validation, we use the validation-set performance to choose the model. <br/>
+After cross-validation, we use the test-set performance to estimate the generalization error. 
+
+The validation-set cannot be used to evaluate the model, because it was used to choose it. 
 """
 
 part1_q2 = r"""
-**Your answer:**
+No.
 
+Our friend decided to use the test set as a validation set, after having used it once as a test set. 
+It is fine to use it as a validation set in this case, i.e. in practice, the validation will work well. 
 
-Write your answer using **markdown** and $\LaTeX$:
-```python
-# A code block
-a = 2
-```
-An equation: $e^{i\pi} -1 = 0$
+The problem is that he would not have a test set. 
+He would have to produce more data in order to test the resulting model. 
+To avoid producing more data, he should use cross-validate on the training set, 
+and then he will be able to use the test set for testing. 
 
+However, he did already use the test set once, and therefore he would need a new test set anyway.
 """
 
 # ==============
