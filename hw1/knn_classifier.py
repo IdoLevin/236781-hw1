@@ -31,7 +31,8 @@ class KNNClassifier(object):
         #     y_train.
         #  2. Save the number of classes as n_classes.
         # ====== YOUR CODE: ======
-        raise NotImplementedError()
+        x_train, y_train = dataloader_utils.flatten(dl_train)
+        n_classes = torch.unique(y_train).numel()
         # ========================
 
         self.x_train = x_train
@@ -63,7 +64,9 @@ class KNNClassifier(object):
             #  - Set y_pred[i] to the most common class among them
             #  - Don't use an explicit loop.
             # ====== YOUR CODE: ======
-            raise NotImplementedError()
+            x_nearest = torch.topk(dist_matrix[:, i], self.k, largest=False)[1]
+            y_nearest = self.y_train[x_nearest]
+            y_pred[i] = torch.mode(y_nearest)[0]
             # ========================
 
         return y_pred
@@ -150,7 +153,15 @@ def find_best_k(ds_train: Dataset, k_choices, num_folds):
         #  random split each iteration), or implement something else.
 
         # ====== YOUR CODE: ======
-        raise NotImplementedError()
+        dl_train, dl_validation = dataloaders.create_train_validation_loaders(
+            ds_train,
+            1 / len(k_choices),
+        )
+        model.train(dl_train)
+        print(dl_validation)
+        x_validation, y_validation = dl_validation
+        y_pred = model.predict(x_validation)
+        accuracies[i] = accuracy(y_validation, y_pred)
         # ========================
 
     best_k_idx = np.argmax([np.mean(acc) for acc in accuracies])
