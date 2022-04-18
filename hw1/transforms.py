@@ -29,7 +29,8 @@ class InvertColors(object):
         """
         # TODO: Invert the colors of the input image.
         # ====== YOUR CODE: ======
-        return torch.ones(x.shape) - x
+
+        return 1 - x
         # ========================
 
 

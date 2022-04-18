@@ -25,7 +25,24 @@ class FirstLastSampler(Sampler):
         # If the length of the data source is N, you should return indices in a
         # first-last ordering, i.e. [0, N-1, 1, N-2, ...].
         # ====== YOUR CODE: ======
-        raise NotImplementedError()
+        low = 0
+        high = len(self.data_source) - 1
+
+        while low < high:
+            yield low
+            low += 1
+
+            if not(low < high):
+                yield high
+                break
+
+            yield high
+            high -= 1
+
+            if not(low < high):
+                yield low
+                break
+
         # ========================
 
     def __len__(self):
