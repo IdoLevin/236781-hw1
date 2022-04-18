@@ -163,5 +163,5 @@ class SubsetDataset(Dataset):
 
     def __len__(self):
         # ====== YOUR CODE: ======
-        raise self.subset_len
+        return self.subset_len
         # ========================
