@@ -28,7 +28,7 @@ class FirstLastSampler(Sampler):
         low = 0
         high = len(self.data_source) - 1
 
-        while low < high:
+        while True:
             yield low
             low += 1
 
@@ -74,7 +74,25 @@ def create_train_validation_loaders(
     #     from the dataset.
     #  Hint: you can specify a Sampler class for the `DataLoader` instance
     #  you create.
+
     # ====== YOUR CODE: ======
+    total_size = len(dataset)
+    validation_size = validation_ratio * total_size
+    train_size = total_size - validation_size
+
+    # get random indices
+    indices = range(total_size)
+    random.shuffle(indices)
+    train_indices = indices[:train_size]
+    validation_indices = indices[train_size:]
+
+    train_sampler = torch.utils.data.SubsetRandomSampler(train_indices)
+    validation_sampler = torch.utils.data.SubsetRandomSampler(validation_indices)
+
+    dl_train = DataLoader(train_sampler)
+
+
+
     raise NotImplementedError()
     # ========================
 
