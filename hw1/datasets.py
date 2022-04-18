@@ -84,7 +84,7 @@ class RandomImageDataset(Dataset):
         #  the random state outside this method.
         #  Raise a ValueError if the index is out of range.
         # ====== YOUR CODE: ======
-        if index >= self.num_samples or index < 0:
+        if not(0 <= index < self.num_samples):
             raise ValueError()
         with torch_temporary_seed(index):
             return random_labelled_image(self.image_dim, self.num_classes)
@@ -156,7 +156,7 @@ class SubsetDataset(Dataset):
         #  Return the item at index + offset from the source dataset.
         #  Raise an IndexError if index is out of bounds.
         # ====== YOUR CODE: ======
-        if index >= self.num_samples or index < 0:
+        if not(0 <= index < self.subset_len):
             raise IndexError()
         return self.source_dataset[index + self.offset]
         # ========================
