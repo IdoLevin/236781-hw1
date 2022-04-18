@@ -153,15 +153,24 @@ def find_best_k(ds_train: Dataset, k_choices, num_folds):
         #  random split each iteration), or implement something else.
 
         # ====== YOUR CODE: ======
-        dl_train, dl_validation = dataloaders.create_train_validation_loaders(
-            ds_train,
-            1 / len(k_choices),
-        )
-        model.train(dl_train)
-        print(dl_validation)
-        x_validation, y_validation = dl_validation
-        y_pred = model.predict(x_validation)
-        accuracies[i] = accuracy(y_validation, y_pred)
+        fold_size = len(ds_train) // num_folds
+        accs = []
+        for i in range(num_folds):
+            train_indices = list(range(i * fold_size)) + list(range((i + 1) * fold_size, len(ds_train)))
+            validation_indices = list(range(i * fold_size, (i + 1) * fold_size))
+
+            train_sampler = torch.utils.data.SubsetRandomSampler(train_indices)
+            validation_sampler = torch.utils.data.SubsetRandomSampler(validation_indices)
+
+            dl_train = torch.utils.data.DataLoader(ds_train, sampler=train_sampler)
+            dl_validation = torch.utils.data.DataLoader(ds_train, sampler=validation_sampler)
+
+            model.train(dl_train)
+            x_validation, y_validation = dataloader_utils.flatten(dl_validation)
+            y_pred = model.predict(x_validation)
+            acc = accuracy(y_validation, y_pred)
+            accs.append(acc)
+        accuracies.append(accs)
         # ========================
 
     best_k_idx = np.argmax([np.mean(acc) for acc in accuracies])

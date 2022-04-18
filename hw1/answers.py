@@ -56,29 +56,22 @@ However, he did already use the test set once, and therefore he would need a new
 # Part 2 answers
 
 part2_q1 = r"""
-**Your answer:**
+No, increasing k too much would not result in a model with better generalization. 
+Increasing k makes the kNN classifier decide by more far away train set examples, that might be irrelevant for 
+the decision because they are too far. 
+Consider for instance the extremal example of k=$\infty$, or making k as large as the training set size: 
+the classifier decides using the entire training set. 
 
-
-Write your answer using **markdown** and $\LaTeX$:
-```python
-# A code block
-a = 2
-```
-An equation: $e^{i\pi} -1 = 0$
-
+However, decreasing k too much makes the learner prone to overfitting.
+It would be more vulnerable to outliers that do not represent their vicinity well. 
 """
 
 part2_q2 = r"""
 **Your answer:**
+1. The train-set accuracy is not a good measure of generalization, because it cannot detect overfit classifiers. 
 
-
-Write your answer using **markdown** and $\LaTeX$:
-```python
-# A code block
-a = 2
-```
-An equation: $e^{i\pi} -1 = 0$
-
+2. Using the test-set for validation contaminates the test-set, so we will not be able to use it afterwards to 
+estimate the generalization error. 
 """
 
 # ==============
