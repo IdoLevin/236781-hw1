@@ -23,7 +23,8 @@ class LinearClassifier(object):
 
         self.weights = None
         # ====== YOUR CODE: ======
-        dims = (self.n_features + 1, self.n_classes)
+        # note that n_features is already D+1, don't add the 1 again
+        dims = (self.n_features, self.n_classes)
         mean = torch.zeros(dims)
         std = torch.ones(dims) * weight_std
         self.weights = torch.normal(mean, std)
@@ -48,8 +49,7 @@ class LinearClassifier(object):
 
         y_pred, class_scores = None, None
         # ====== YOUR CODE: ======
-        from hw1.transforms import BiasTrick
-        class_scores = BiasTrick()(x) @ self.weights
+        class_scores = x @ self.weights
         y_pred = torch.argmax(class_scores, dim=1)
         # ========================
 
