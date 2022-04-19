@@ -23,7 +23,10 @@ class LinearClassifier(object):
 
         self.weights = None
         # ====== YOUR CODE: ======
-        raise NotImplementedError()
+        dims = (self.n_features + 1, self.n_classes)
+        mean = torch.zeros(dims)
+        std = torch.ones(dims) * weight_std
+        self.weights = torch.normal(mean, std)
         # ========================
 
     def predict(self, x: Tensor):
@@ -45,7 +48,9 @@ class LinearClassifier(object):
 
         y_pred, class_scores = None, None
         # ====== YOUR CODE: ======
-        raise NotImplementedError()
+        from hw1.transforms import BiasTrick
+        class_scores = BiasTrick()(x) @ self.weights
+        y_pred = torch.argmax(class_scores, dim=1)
         # ========================
 
         return y_pred, class_scores
@@ -66,7 +71,9 @@ class LinearClassifier(object):
 
         acc = None
         # ====== YOUR CODE: ======
-        raise NotImplementedError()
+        true = torch.Tensor.sum(y == y_pred)
+        total = torch.numel(y)
+        acc = true / total
         # ========================
 
         return acc * 100
