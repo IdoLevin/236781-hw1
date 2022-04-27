@@ -109,7 +109,31 @@ class LinearClassifier(object):
             #     using the weight_decay parameter.
 
             # ====== YOUR CODE: ======
-            raise NotImplementedError()
+            total_loss = 0
+            for x, y in dl_train:
+                y_pred, x_scores = self.predict(x)
+                total_loss += loss_fn.loss(x, y, x_scores, y_pred) + torch.norm(self.weights) * (weight_decay / 2)
+                grad = loss_fn.grad() + self.weights * weight_decay
+                self.weights -= grad * learn_rate
+                total_correct += self.evaluate_accuracy(y, y_pred)
+
+            average_accuracy = total_correct / len(dl_train)
+            average_loss = total_loss / len(dl_train)
+            train_res.accuracy.append(average_accuracy)
+            train_res.loss.append(average_loss)
+
+            total_correct_valid = 0
+            total_loss_valid = 0
+            for x, y in dl_valid:
+                y_pred, x_scores = self.predict(x)
+                total_loss_valid += loss_fn.loss(x, y, x_scores, y_pred) + torch.norm(self.weights) * (weight_decay / 2)
+                total_correct_valid += self.evaluate_accuracy(y, y_pred)
+
+            average_accuracy_valid = total_correct_valid / len(dl_valid)
+            average_loss_valid = total_loss_valid / len(dl_valid)
+            valid_res.accuracy.append(average_accuracy_valid)
+            valid_res.loss.append(average_loss_valid)
+
             # ========================
             print(".", end="")
 
@@ -130,7 +154,8 @@ class LinearClassifier(object):
         #  The output shape should be (n_classes, C, H, W).
 
         # ====== YOUR CODE: ======
-        raise NotImplementedError()
+        skip_one = int(has_bias)
+        w_images = self.weights[skip_one:].T.reshape((self.n_classes,) + img_shape)
         # ========================
 
         return w_images
@@ -143,7 +168,9 @@ def hyperparams():
     #  Manually tune the hyperparameters to get the training accuracy test
     #  to pass.
     # ====== YOUR CODE: ======
-    raise NotImplementedError()
+    hp['weight_std'] = 0.001
+    hp['learn_rate'] = 0.015
+    hp['weight_decay'] = 0.001
     # ========================
 
     return hp

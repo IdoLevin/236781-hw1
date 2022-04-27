@@ -89,9 +89,10 @@ class SVMHingeLoss(ClassifierLoss):
         x = self.grad_ctx['X']
         y = self.grad_ctx['y']
         N = self.grad_ctx['N']
-        G = M
-        G[G > 0] = 1
+
+        G = (M > 0).type(x.dtype)
         G[range(N), y] = -G.sum(dim=1)
+
         grad = x.t() @ G / N
         # ========================
 
