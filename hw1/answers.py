@@ -160,40 +160,35 @@ We say only slightly, because it is expected, and the test performance is pretty
 part4_q1 = r"""
 **Your answer:**
 
+We would like to see the test points as close as possible to the solid red line. 
+That would mean that the test error is minimal, and that $y \approx \hat{y}$.
 
-Write your answer using **markdown** and $\LaTeX$:
-```python
-# A code block
-a = 2
-```
-An equation: $e^{i\pi} -1 = 0$
-
+As for the train points, we would not like to see them doing much better than the test points, because that 
+would imply overfitting. 
 """
 
 part4_q2 = r"""
 **Your answer:**
 
+1. It is a linear model with respect to the input features, computing a linear function with respect to them. 
+It is a non-linear model with respect to the original features.  
 
-Write your answer using **markdown** and $\LaTeX$:
-```python
-# A code block
-a = 2
-```
-An equation: $e^{i\pi} -1 = 0$
+2. Yes. However, it would be very much handcrafted. The only non-linear features will be the ones we will choose. 
 
+3. No, the decision boundary will not be a hyperplane.  
+The linear classifier would compute the class scores as non-linear functions, 
+hence their intersections (i.e. the regions where two classes have the same score) would likely not be hyperplanes. 
 """
 
 part4_q3 = r"""
 **Your answer:**
 
+1. If we took linspace(0, 1, num=20), then the optimal $\lambda$ could be $10^{-3}$ and we would miss it.
+If we took linspace(0, $2*10^{-3}$, num=20), then the optimal $\lambda$ could be $0.5$ and we would miss it.
+By using logspace, we search for the magnitude of the optimal lambda.   
 
-Write your answer using **markdown** and $\LaTeX$:
-```python
-# A code block
-a = 2
-```
-An equation: $e^{i\pi} -1 = 0$
-
+2. We checked each combination out of 20 option for $\lambda$ and 3 options for $\deg$, on each of 3 folds. 
+In total $20*3*3=180$.
 """
 
 # ==============
